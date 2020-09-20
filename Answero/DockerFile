@@ -1,0 +1,4 @@
+FROM java:8
+EXPOSE 9090
+ADD /target/Answero.jar Answero.jar
+ENTRYPOINT ["java", "-jar", "Answero.jar"]

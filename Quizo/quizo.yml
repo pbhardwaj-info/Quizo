@@ -10,8 +10,8 @@ spec:
     app: quizo
   ports:
     - name: quizo
-      port: 8080
-      targetPort: 8080
+      port: 8082
+      targetPort: 8082
       nodePort: 30080
 
 ---
@@ -33,5 +33,5 @@ spec:
         - name: quizo
           image: quizo:latest
           ports:
-            - containerPort: 8080
+            - containerPort: 8082
           imagePullPolicy: Never

@@ -2,10 +2,10 @@
 *.class
 
 #target
-target/
+*/target/
 
 #intellij
-/.idea/*
+*/.idea/*
 
 # Log file
 *.log
@@ -27,5 +27,6 @@ target/
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
-/.idea/.gitignore
-/Quizo.iml
+*/.idea/.gitignore
+*/Quizo.iml
+*/Answero.iml
