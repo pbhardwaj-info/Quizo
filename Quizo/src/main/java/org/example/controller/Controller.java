@@ -18,6 +18,7 @@ public class Controller {
     private static final Logger log = LoggerFactory.getLogger(Controller.class);
     private static final QuestionsManagerService questionsManagerService = new QuestionsManagerService();
 
+    private String answeroService = System.getenv("ANSWERO_SERVICE");
     @Autowired
     private RestTemplate restTemplate;
 
@@ -35,7 +36,7 @@ public class Controller {
     // get option from answero api and match here, if it is correct the return success else false
     @GetMapping(value = "/answer/{questionId}/{option}")
     public String checkAnswerForQuestionId(@PathVariable("questionId") Integer questionId, @PathVariable("option") String option) {
-        String url = String.format("http://localhost:9090/%s/%s", questionId, option);
+        String url = String.format("http://%s/%s/%s",answeroService, questionId, option);
         log.info("Answero API url called: {}", url);
         ResponseEntity<String> exchange = ResponseEntity.ok("I am null");
         try {

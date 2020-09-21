@@ -30,8 +30,11 @@ spec:
         app: quizo
     spec:
       containers:
-        - name: quizo
-          image: quizo:latest
-          ports:
-            - containerPort: 8082
-          imagePullPolicy: Never
+      - name: quizo
+        image: quizo:latest
+        env:
+        - name: ANSWERO_SERVICE
+          value: answero:9090
+        ports:
+          - containerPort: 8082
+        imagePullPolicy: Never

@@ -31,7 +31,7 @@ spec:
     spec:
       containers:
         - name: answero
-          image: answero:v1
+          image: answero:latest
           ports:
             - containerPort: 9090
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Never
