@@ -1,4 +1,37 @@
-FROM java:8
-EXPOSE 8080
-ADD /target/Quizo.jar Quizo.jar
+# FROM java:8
+# EXPOSE 8080
+# ADD /target/Quizo.jar Quizo.jar
+# ENTRYPOINT ["java", "-jar", "Quizo.jar"]
+FROM openjdk:8-jdk-alpine as build-env
+
+RUN apk add curl tar
+
+ARG MVN_URL=http://apachemirror.wuchna.com/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz​
+# Downloads, unzips and creates symlinks for Maven
+RUN mkdir -p /usr/share/maven /usr/share/maven/ref \
+  && curl -fsSL -o /tmp/apache-maven.tar.gz ${MVN_URL} \
+  && tar -xzf /tmp/apache-maven.tar.gz -C /usr/share/maven --strip-components=1 \
+  && rm -f /tmp/apache-maven.tar.gz \
+  && ln -s /usr/share/maven/bin/mvn /usr/bin/mvn
+
+# Creates env var for mvn
+ENV MAVEN_HOME /usr/share/maven
+ENV MAVEN_CONFIG "/root/.m2"
+
+WORKDIR app
+
+COPY . .
+
+RUN mvn clean install
+
+# second step just to have a clean image with just the fat jar
+FROM openjdk:8-jdk-alpine
+
+WORKDIR app
+
+COPY --from=build-env /app/target/Quizo.jar Quizo.jar
+
+EXPOSE 8082
+
 ENTRYPOINT ["java", "-jar", "Quizo.jar"]
+
